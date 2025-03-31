@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=${MYSQL_HOST}
+      - DB_USER="root"
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+    networks:
+      - app-network
+
+  mariadb:
+    build:
+      context: ./MariaDB
+      dockerfile: Dockerfile
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE=${MYSQL_DATABASE}
+      MYSQL_USER=${MYSQL_USER}
+      MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
