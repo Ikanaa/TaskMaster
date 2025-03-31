@@ -1,2 +1,2 @@
 # TaskMaster
-[GitHub Project]("https://github.com/users/Ikanaa/projects/1")
+[GitHub Project](https://github.com/users/Ikanaa/projects/1)
