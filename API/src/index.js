@@ -34,8 +34,29 @@ async function testConnection() {
     }
 }
 
+async function connectWithRetry(maxRetries = 5, delay = 500) {
+  let retries = 0;
+  while (retries < maxRetries) {
+    try {
+      const conn = await pool.getConnection();
+      console.log('Connected to MariaDB successfully!');
+      conn.release();
+      return;
+    } catch (err) {
+      retries++;
+      console.error(`Connection attempt ${retries}/${maxRetries} failed:`, err);
+      if (retries >= maxRetries) throw err;
+      console.log(`Retrying in ${delay/1000} seconds...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
 // Test connection on startup
 testConnection();
+// connectWithRetry()
+//   .then(() => console.log('Database connection established successfully'))
+//   .catch(err => console.error('Failed to connect to the database:', err));
 
 // Export pool for use in other modules
 module.exports = { pool };
