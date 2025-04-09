@@ -1,20 +1,4 @@
 services:
-  api:
-    build:
-      context: ./API
-      dockerfile: Dockerfile
-    environment:
-      - DB_HOST=${MYSQL_HOST}
-      - DB_USER=root
-      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - DB_NAME=${MYSQL_DATABASE}
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mariadb
-    networks:
-      - app-network
-
   mariadb:
     build:
       context: ./MariaDB
