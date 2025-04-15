@@ -1,4 +1,4 @@
-using taskMaster.Model;
+using EntityFramework.Models;
 
 namespace App.View;
 
@@ -22,20 +22,30 @@ public partial class DetailTache : ContentPage
             return;
         }
 
+        var user = new Utilisateur();
+        user.Nom = "Anonyme";
+        user.Id_uti = 0;
+        user.Date_inscription = DateTime.Now;
+        user.Email = "";
+        user.Mot_de_passe = "";
+        user.Prenom = "";
+
         // Créer un nouveau commentaire
-        var newComment = new Commentaire(
-            id: new Random().Next(1000, 9999),
-            texte: newCommentText,
-            utilisateur: Tache.auteur ?? new User(0, "Anonyme", "", "", "", DateTime.Now),
-            date: DateTime.Now
-        );
+        var newComment = new Commentaire();
+
+            newComment.Id_com = new Random().Next(1000, 9999);
+            newComment.Contenu = newCommentText;
+        newComment.Utilisateur = Tache.Auteur ?? user;
+            newComment.Date_creation = DateTime.Now;
+
+        
 
         // Ajouter le commentaire à la tâche
-        Tache.commentaires?.Add(newComment);
+        Tache.Commentaires?.Add(newComment);
 
         // Rafraîchir la CollectionView
         TaskListView.ItemsSource = null;
-        TaskListView.ItemsSource = Tache.commentaires;
+        TaskListView.ItemsSource = Tache.Commentaires;
 
         // Réinitialiser l'éditeur
         NewCommentEditor.Text = string.Empty;
@@ -49,11 +59,11 @@ public partial class DetailTache : ContentPage
         if (commentToDelete != null)
         {
             // Supprimer le commentaire
-            Tache.commentaires?.Remove(commentToDelete);
+            Tache.Commentaires?.Remove(commentToDelete);
 
             // Rafraîchir la CollectionView
             TaskListView.ItemsSource = null;
-            TaskListView.ItemsSource = Tache.commentaires;
+            TaskListView.ItemsSource = Tache.Commentaires;
         }
     }
 }

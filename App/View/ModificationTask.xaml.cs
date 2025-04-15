@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using taskMaster.Model;
+using EntityFramework.Models;
 
 namespace App.View;
 
@@ -34,11 +34,11 @@ public partial class ModificationTask : ContentPage
 
         // Charger les données de la tâche existante
         CurrentTask = task;
-        Titre = task.titre;
-        Description = task.description;
-        Statut = task.statut;
-        Priorite = task.priorite;
-        Categorie = task.categorie;
+        Titre = task.Titre;
+        Description = task.Description;
+        Statut = task.Statut;
+        Priorite = task.Priorite;
+        Categorie = task.Categorie;
 
         OnTaskModified = onTaskModified;
 
@@ -60,11 +60,11 @@ public partial class ModificationTask : ContentPage
         }
 
         // Mettre à jour les propriétés de la tâche
-        CurrentTask.titre = Titre;
-        CurrentTask.description = Description;
-        CurrentTask.statut = Statut;
-        CurrentTask.priorite = Priorite;
-        CurrentTask.categorie = Categorie;
+        CurrentTask.Titre = Titre;
+        CurrentTask.Description = Description;
+        CurrentTask.Statut = Statut;
+        CurrentTask.Priorite = Priorite;
+        CurrentTask.Categorie = Categorie;
 
         // Appeler le callback pour signaler la modification
         OnTaskModified?.Invoke(CurrentTask);

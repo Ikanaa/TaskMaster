@@ -10,9 +10,9 @@ public partial class ConnexionUser : ContentPage
 
     private void OnLoginButtonClicked(object sender, EventArgs e)
     {
-        string email = EmailEntry.Text;
+        string emailOrName = NameEntry.Text;
         string password = PasswordEntry.Text;
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(emailOrName) || string.IsNullOrWhiteSpace(password))
         {
             MessageLabel.Text = "Tous les champs sont obligatoires.";
             return;

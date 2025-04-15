@@ -6,7 +6,7 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        MainPage = new NavigationPage(new View.Accueil());
+        MainPage = new NavigationPage(new View.ConnexionUser());
       
     }
 }

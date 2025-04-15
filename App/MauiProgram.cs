@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EntityFramework.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace App;
@@ -11,28 +13,28 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .ConfigureLifecycleEvents(events =>
-             {
+            {
 #if WINDOWS
-                 events.AddWindows(windows =>
-                 {
-                     windows.OnLaunched((app, args) =>
-                     {
-                         // Accéder à la première fenêtre via Application.Current.Windows
-                         var mainWindow = Application.Current?.Windows.FirstOrDefault();
-                         if (mainWindow != null)
-                         {
-                             mainWindow.Width = 800; // Largeur de la fenêtre
-                             mainWindow.Height = 600; // Hauteur de la fenêtre
-
-                            // mainWindow.MaximumWidth = mainWindow.Width;
-                            // mainWindow.MaximumHeight = mainWindow.Height;
-                             mainWindow.MinimumWidth = mainWindow.Width;
-                             mainWindow.MinimumHeight = mainWindow.Height;
-                         }
-                     });
-                 });
+                events.AddWindows(windows =>
+                {
+                    windows.OnLaunched((app, args) =>
+                    {
+                        var mainWindow = Application.Current?.Windows.FirstOrDefault();
+                        if (mainWindow != null)
+                        {
+                            mainWindow.Width = 800;
+                            mainWindow.Height = 600;
+                            mainWindow.MinimumWidth = 800;
+                            mainWindow.MinimumHeight = 600;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Erreur : Impossible d'accéder à la fenêtre principale.");
+                        }
+                    });
+                });
 #endif
-             })
+            })
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -41,7 +43,24 @@ public static class MauiProgram
 
 #if DEBUG
         builder.Logging.AddDebug();
+       
 #endif
+
+        /*builder.Services.AddDbContext<TaskmasterContext>(options =>
+        {
+            try
+            {
+                options.UseMySql(
+                    "server=localhost;database=taskmaster_db;user=root;password=yourpassword;",
+                    new MySqlServerVersion(new Version(10, 5, 0))
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la configuration de la base de données : {ex.Message}");
+            }
+        });*/
+
 
         return builder.Build();
     }

@@ -9,16 +9,11 @@
            HorizontalOptions="Center" />
 
         <Entry x:Name="NameEntry" 
-           Placeholder="Nom complet" 
+           Placeholder="Nom complet ou Email" 
            Keyboard="Text" 
            WidthRequest="250"
            HorizontalOptions="Center" />
 
-        <Entry x:Name="EmailEntry" 
-           Placeholder="Email" 
-           Keyboard="Email" 
-           WidthRequest="250"
-           HorizontalOptions="Center" />
 
         <Entry x:Name="PasswordEntry" 
            Placeholder="Mot de passe" 
@@ -33,7 +28,7 @@
             WidthRequest="250"
             HorizontalOptions="Center" />
       
-        <Button Text="S'inscrir"
+        <Button Text="S'inscrire"
              Clicked="OnReturnButtonClicked"
              BackgroundColor="Transparent"
              TextColor="#007AFF"

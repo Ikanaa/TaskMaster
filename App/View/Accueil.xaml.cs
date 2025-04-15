@@ -1,4 +1,7 @@
-using taskMaster.Model;
+using EntityFramework.Data;
+using EntityFramework.Models;
+using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -10,29 +13,76 @@ public partial class Accueil : ContentPage
 
     public List<Commentaire> Commentaire { get; set; } = new List<Commentaire>();
 
-    public User utilisateur { get; set; } = new User();
 
+
+    public Utilisateur utilisateur { get; set; } = new Utilisateur();
+
+    public Commentaire com1 = new Commentaire();
+    public Commentaire com2 = new Commentaire();
+    public Commentaire com3 = new Commentaire();
+
+    public Tache task1 = new Tache();
+    public Tache task2 = new Tache();
+    public Tache task3 = new Tache();
+    public Tache task4 = new Tache();
+    public Tache task5 = new Tache();
 
     public Accueil()
     {
         InitializeComponent();
+       
 
-            utilisateur.id_uti = 65;
-            utilisateur.nom = "moulin";
-            utilisateur.prenom = "jean";
-            utilisateur.email = "Email@gmail.com";
-            utilisateur.mot_de_passe = "oui oui";
-            utilisateur.date_inscription = DateTime.Now;
-        
+
+            utilisateur.Id_uti = 65;
+            utilisateur.Nom = "moulin";
+            utilisateur.Prenom = "jean";
+            utilisateur.Email = "Email@gmail.com";
+            utilisateur.Mot_de_passe = "oui oui";
+            utilisateur.Date_inscription = DateTime.Now;
+            
+            com1.Id_com = 1;
+            com1.Contenu = "Commentaire 1";
+            com1.Utilisateur = utilisateur;
+
+            com1.Id_com = 2;
+            com1.Contenu = "Commentaire 2";
+            com1.Utilisateur = utilisateur;
+
+            com1.Id_com = 3;
+            com1.Contenu = "Commentaire 3";
+            com1.Utilisateur = utilisateur;
+
+            task1.Id_tac = 1;
+            task1.Auteur = utilisateur;
+            task1.Assignee = utilisateur;
+            task1.Commentaires = Commentaire;
+            task1.Date_creation = DateTime.Now;
+            task1.Statut = "En cours";
+            task1.Priorite = "Haute";
+            task1.Description = "Description de la tâche 1";
+            task1.Titre = "Tâche 1";
+            task1.Categorie = "Développement";
+
+            task2.Id_tac = 2;
+            task2.Auteur = utilisateur;
+            task2.Assignee = utilisateur;
+            task2.Commentaires = Commentaire;
+            task2.Date_creation = DateTime.Now;
+            task2.Statut = "À faire";
+            task2.Priorite = "Moyenne";
+            task2.Description = "Description de la tâche 2";
+            task2.Titre = "Tâche 2";
+            task2.Categorie = "Test";
 
 
 
 
         Commentaire = new List<Commentaire>
         {
-            new Commentaire(1, "Commentaire alpha romeo ",utilisateur, DateTime.Now),
-            new Commentaire(2, "Commentaire beta composition",utilisateur,DateTime.Now),
-            new Commentaire(2, "Commentaire golden rise ",utilisateur, DateTime.Now)
+            com1,
+            com2,
+            com3
+            
         }; 
 
 
@@ -40,16 +90,9 @@ public partial class Accueil : ContentPage
         // Exemple de tâches initiales
         Tasks = new List<Tache>
         {
-            new Tache(1, "Tâche 1", "Description de la tâche 1", "En cours", "Haute", "Développement", "Urgent",Commentaire, DateTime.Now),
-            new Tache(2, "Tâche 2", "Description de la tâche 2", "À faire", "Moyenne", "Test", "Important",Commentaire ,DateTime.Now),
-            new Tache(1, "Tâche 1", "Description de la tâche 1", "En cours", "Haute", "Développement", "Urgent",Commentaire, DateTime.Now),
-            new Tache(2, "Tâche 2", "Description de la tâche 2", "À faire", "Moyenne", "Test", "Important",Commentaire, DateTime.Now),
-            new Tache(1, "Tâche 1", "Description de la tâche 1", "En cours", "Haute", "Développement", "Urgent",Commentaire, DateTime.Now),
-            new Tache(2, "Tâche 2", "Description de la tâche 2", "À faire", "Moyenne", "Test", "Important",Commentaire, DateTime.Now),
-            new Tache(1, "Tâche 1", "Description de la tâche 1", "En cours", "Haute", "Développement", "Urgent",Commentaire, DateTime.Now),
-            new Tache(2, "Tâche 2", "Description de la tâche 2", "À faire", "Moyenne", "Test", "Important",Commentaire, DateTime.Now),
-            new Tache(1, "Tâche 1", "Description de la tâche 1", "En cours", "Haute", "Développement", "Urgent",Commentaire, DateTime.Now),
-            new Tache(2, "Tâche 2", "Description de la tâche 2", "À faire", "Moyenne", "Test", "Important",Commentaire, DateTime.Now)
+            task1,
+            task2,
+            
         };
 
         // Lier la liste des tâches à la CollectionView
@@ -133,5 +176,22 @@ public partial class Accueil : ContentPage
             TaskListView.ItemsSource = Tasks;
         }
     }
+
+    private async void OnTestConnectionClicked(object sender, EventArgs e)
+    {
+        await TestDatabaseConnection();
+    }
+    private async Task TestDatabaseConnection()
+    {
+        using (var context = new TaskmasterContext())
+        {
+            var utilisateurs = await context.Utilisateurs.ToListAsync();
+            foreach (var utilisateur in utilisateurs)
+            {
+                System.Diagnostics.Debug.WriteLine($"Utilisateur : {utilisateur.Nom} {utilisateur.Prenom}");
+            }
+        }
+    }
+
 
 }

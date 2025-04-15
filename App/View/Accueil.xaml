@@ -29,11 +29,11 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="15"
-               Margin="10"
-               BorderColor="#444444"
-               CornerRadius="15"
-               BackgroundColor="#2E2E2E"
-               HasShadow="True">
+                           Margin="10"
+                           BorderColor="#444444"
+                           CornerRadius="15"
+                           BackgroundColor="#2E2E2E"
+                           HasShadow="True">
                         <VerticalStackLayout Spacing="10">
                             <!-- Titre de la tâche -->
                             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
@@ -41,7 +41,7 @@
                            WidthRequest="24"
                            HeightRequest="24"
                            VerticalOptions="Center" />
-                                <Label Text="{Binding titre}"
+                                <Label Text="{Binding Titre}"
                            FontSize="18"
                            FontAttributes="Bold"
                            TextColor="White"
@@ -49,7 +49,7 @@
                             </HorizontalStackLayout>
 
                             <!-- Description -->
-                            <Label Text="{Binding description}"
+                            <Label Text="{Binding Description}"
                        FontSize="14"
                        TextColor="Gray"
                        LineBreakMode="TailTruncation" />
@@ -57,19 +57,23 @@
                             <!-- Statut, Priorité et Date -->
                             <HorizontalStackLayout Spacing="15">
                                 <!-- Statut -->
-                                <Label Text="{Binding statut}"
+                                <Label Text="{Binding Statut}"
                            FontSize="14"
                            TextColor="Blue"
                            FontAttributes="Bold" />
 
+                                
+
+
+
                                 <!-- Priorité -->
-                                <Label Text="{Binding priorite}"
+                                <Label Text="{Binding Priorite}"
                            FontSize="14"
                            TextColor="Orange"
                            FontAttributes="Bold" />
 
                                 <!-- Date de création -->
-                                <Label Text="{Binding date_creation, StringFormat='Créé le : {0:dd/MM/yyyy}'}"
+                                <Label Text="{Binding Date_creation, StringFormat='Créé le : {0:dd/MM/yyyy}'}"
                            FontSize="14"
                            TextColor="Gray" />
                             </HorizontalStackLayout>
@@ -85,7 +89,8 @@
                             WidthRequest="100"
                             HeightRequest="40"
                             CornerRadius="20" />
-
+                             
+                                
                                 <!-- Bouton Supprimer -->
                                 <Button Text="Supprimer"
                             CommandParameter="{Binding .}"
@@ -95,6 +100,7 @@
                             WidthRequest="100"
                             HeightRequest="40"
                             CornerRadius="20" />
+                               
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -112,7 +118,9 @@
                     Margin="0,0,0,10"
                     FontSize="14"
                     Clicked="OnAddTaskButtonClicked" />
+             
         </Grid>
+            
 
         <!-- Footer -->
         <BoxView BackgroundColor="#333333" Grid.Row="3" HeightRequest="40" />

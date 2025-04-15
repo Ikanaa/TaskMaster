@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using taskMaster.Model;
+using EntityFramework.Models;
 
 namespace App.View;
 
@@ -50,17 +50,18 @@ public partial class AjoutTask : ContentPage
         }
 
         // Créer une nouvelle tâche
-        var nouvelleTache = new Tache(
-            id: new Random().Next(1000, 9999),
-            titre: Titre,
-            description: Description,
-            statut: Statut,
-            priorite: Priorite,
-            categorie: Categorie,
-            etiquettes: "Urgent",
-            null,
-            date_creation: DateTime.Now
-        );
+        var nouvelleTache = new Tache();
+         
+            nouvelleTache.Id_tac = new Random().Next(1000, 9999);
+            nouvelleTache.Titre = Titre;
+            nouvelleTache.Description = Description;
+            nouvelleTache.Statut = Statut;            
+            nouvelleTache.Statut = Priorite;
+            nouvelleTache.Categorie = Categorie;
+            nouvelleTache.Etiquettes = "Urgent";
+            nouvelleTache.Date_creation = DateTime.Now;
+
+
 
         // Appeler le callback pour ajouter la tâche
         OnTaskAdded?.Invoke(nouvelleTache);
