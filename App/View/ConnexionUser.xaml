@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.View.ConnexionUser"
+             Title="Veuillez vous connecter">
+    <VerticalStackLayout Padding="10" Spacing="10">
+        <Label Text="Welcome user" 
+           FontSize="24" 
+           HorizontalOptions="Center" />
+
+        <Entry x:Name="NameEntry" 
+           Placeholder="Nom complet" 
+           Keyboard="Text" 
+           WidthRequest="250"
+           HorizontalOptions="Center" />
+
+        <Entry x:Name="EmailEntry" 
+           Placeholder="Email" 
+           Keyboard="Email" 
+           WidthRequest="250"
+           HorizontalOptions="Center" />
+
+        <Entry x:Name="PasswordEntry" 
+           Placeholder="Mot de passe" 
+           IsPassword="True" 
+           WidthRequest="250"
+           HorizontalOptions="Center" />
+
+        <Button Text="Se connecter " 
+            Clicked="OnLoginButtonClicked" 
+            BackgroundColor="#007AFF" 
+            TextColor="White" 
+            WidthRequest="250"
+            HorizontalOptions="Center" />
+      
+        <Button Text="S'inscrir"
+             Clicked="OnReturnButtonClicked"
+             BackgroundColor="Transparent"
+             TextColor="#007AFF"
+             HorizontalOptions="Center" />
+
+        <Label x:Name="MessageLabel" 
+           Text="" 
+           TextColor="Red" 
+           HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

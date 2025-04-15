@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.View.DetailTache"
+             Title="Détails de la Tâche"
+             BackgroundColor="#1E1E1E">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Titre de la tâche -->
+            <Frame BackgroundColor="#333333"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <Label Text="{Binding titre}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+            </Frame>
+
+            <!-- Informations principales -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="10">
+                    <!-- Description -->
+                    <Label Text="Description :"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Grid.Row="0" />
+                    <Label Text="{Binding description}"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Grid.Row="0"
+                           Grid.Column="1" />
+
+                    <!-- Statut -->
+                    <Label Text="Statut :"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Grid.Row="1" />
+                    <Label Text="{Binding statut}"
+                           FontSize="14"
+                           TextColor="Blue"
+                           Grid.Row="1"
+                           Grid.Column="1" />
+
+                    <!-- Date de création -->
+                    <Label Text="Créé le :"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Grid.Row="2" />
+                    <Label Text="{Binding date_creation, StringFormat='{0:dd/MM/yyyy}'}"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Grid.Row="2"
+                           Grid.Column="1" />
+                </Grid>
+            </Frame>
+
+            <!-- Priorité et Catégorie -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="10">
+                    <!-- Priorité -->
+                    <Label Text="Priorité :"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Grid.Row="0" />
+                    <Label Text="{Binding priorite}"
+                           FontSize="14"
+                           TextColor="Orange"
+                           Grid.Row="0"
+                           Grid.Column="1" />
+
+                    <!-- Catégorie -->
+                    <Label Text="Catégorie :"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Grid.Row="1" />
+                    <Label Text="{Binding categorie}"
+                           FontSize="14"
+                           TextColor="LightGreen"
+                           Grid.Row="1"
+                           Grid.Column="1" />
+                </Grid>
+            </Frame>
+            <!-- Section des commentaires -->
+            <Frame BackgroundColor="#2E2E2E"
+        CornerRadius="10"
+        Padding="15"
+        HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Commentaires"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+                    <!-- Liste des commentaires -->
+                    <CollectionView x:Name="TaskListView"
+                         ItemsSource="{Binding commentaires}"
+                         SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#333333"
+                                       CornerRadius="10"
+                                       Padding="10"
+                                       Margin="5">
+                                    <Grid RowDefinitions="Auto, Auto, Auto"
+                                           ColumnDefinitions="*, Auto">
+                                        <!-- Nom de l'utilisateur -->
+                                        <Label Text="{Binding utilisateur.nom}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="LightBlue"
+                                               Grid.Row="0"
+                                               Grid.Column="0" />
+
+                                        <!-- Bouton Supprimer -->
+                                        <Button Text="Supprimer"
+                                                CommandParameter="{Binding .}"
+                                                Clicked="OnDeleteCommentButtonClicked"
+                                                BackgroundColor="#F44336"
+                                                TextColor="White"
+                                                CornerRadius="10"
+                                                WidthRequest="80"
+                                                HeightRequest="30"
+                                                FontSize="12"
+                                                Padding="5"
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                HorizontalOptions="End"
+                                                VerticalOptions="Start" />
+
+                                        <!-- Contenu du commentaire -->
+                                        <Label Text="{Binding contenu}"
+                                               FontSize="14"
+                                               TextColor="White"
+                                               Grid.Row="1"
+                                               Grid.ColumnSpan="2" />
+
+                                        <!-- Date de création -->
+                                        <Label Text="{Binding date_creation, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                                               FontSize="12"
+                                               TextColor="Gray"
+                                               HorizontalOptions="End"
+                                               Grid.Row="2"
+                                               Grid.ColumnSpan="2" />       
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                    <!-- Ajouter un commentaire -->
+                    <Editor x:Name="NewCommentEditor"
+                             Placeholder="Ajouter un commentaire..."
+                             BackgroundColor="#444444"
+                             TextColor="White"
+                             PlaceholderColor="Gray"
+                             FontSize="14" />
+
+                    <Button Text="Ajouter"
+                             Clicked="OnAddCommentButtonClicked"
+                             BackgroundColor="#4CAF50"
+                             TextColor="White"
+                             CornerRadius="10" />
+                </VerticalStackLayout>
+            </Frame>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

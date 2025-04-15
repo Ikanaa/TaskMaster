@@ -36,32 +36,60 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*"/>
+        <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="View\DetailTask.xaml.cs">
+        <DependentUpon>DetailTask.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="View\Accueil.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\AjoutTask.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\ConnexionUser.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\InscriptionUser.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\ModificationTask.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\DetailTask.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
 </Project>

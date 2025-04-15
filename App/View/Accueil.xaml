@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.View.Accueil"
+             Title="Gestionnaire de Tâches">
+    <Grid RowDefinitions="Auto, *, Auto, Auto">
+        <!-- Header -->
+        <BoxView BackgroundColor="#333333" Grid.Row="0" />
+        <Label Text="Liste des Tâches"
+               FontSize="24"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="White"
+               Grid.Row="0" />
+
+        <!-- Liste des tâches -->
+        <CollectionView x:Name="TaskListView"
+                        ItemsSource="{Binding Tasks}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnTaskSelected"
+                        Grid.Row="1"
+                        Margin="10">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="2"
+                                 HorizontalItemSpacing="20"
+                                 VerticalItemSpacing="20" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="15"
+               Margin="10"
+               BorderColor="#444444"
+               CornerRadius="15"
+               BackgroundColor="#2E2E2E"
+               HasShadow="True">
+                        <VerticalStackLayout Spacing="10">
+                            <!-- Titre de la tâche -->
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Image Source="task_icon.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center" />
+                                <Label Text="{Binding titre}"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <!-- Description -->
+                            <Label Text="{Binding description}"
+                       FontSize="14"
+                       TextColor="Gray"
+                       LineBreakMode="TailTruncation" />
+
+                            <!-- Statut, Priorité et Date -->
+                            <HorizontalStackLayout Spacing="15">
+                                <!-- Statut -->
+                                <Label Text="{Binding statut}"
+                           FontSize="14"
+                           TextColor="Blue"
+                           FontAttributes="Bold" />
+
+                                <!-- Priorité -->
+                                <Label Text="{Binding priorite}"
+                           FontSize="14"
+                           TextColor="Orange"
+                           FontAttributes="Bold" />
+
+                                <!-- Date de création -->
+                                <Label Text="{Binding date_creation, StringFormat='Créé le : {0:dd/MM/yyyy}'}"
+                           FontSize="14"
+                           TextColor="Gray" />
+                            </HorizontalStackLayout>
+
+                            <!-- Boutons d'action -->
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                                <!-- Bouton Modifier -->
+                                <Button Text="Modifier"
+                            CommandParameter="{Binding .}"
+                            Clicked="OnModifyTaskButtonClicked"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            WidthRequest="100"
+                            HeightRequest="40"
+                            CornerRadius="20" />
+
+                                <!-- Bouton Supprimer -->
+                                <Button Text="Supprimer"
+                            CommandParameter="{Binding .}"
+                            Clicked="OnDeleteTaskButtonClicked"
+                            BackgroundColor="Red"
+                            TextColor="White"
+                            WidthRequest="100"
+                            HeightRequest="40"
+                            CornerRadius="20" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        
+        </CollectionView>
+
+        <!-- Bouton Ajouter une Tâche -->
+        <Grid Grid.Row="2" VerticalOptions="End" HorizontalOptions="Center">
+            <Button Text="Ajouter une Tâche"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    HeightRequest="25"
+                    Margin="0,0,0,10"
+                    FontSize="14"
+                    Clicked="OnAddTaskButtonClicked" />
+        </Grid>
+
+        <!-- Footer -->
+        <BoxView BackgroundColor="#333333" Grid.Row="3" HeightRequest="40" />
+    </Grid>
+</ContentPage>
