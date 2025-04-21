@@ -22,10 +22,10 @@ public static class MauiProgram
                         var mainWindow = Application.Current?.Windows.FirstOrDefault();
                         if (mainWindow != null)
                         {
-                            mainWindow.Width = 800;
-                            mainWindow.Height = 600;
-                            mainWindow.MinimumWidth = 800;
-                            mainWindow.MinimumHeight = 600;
+                            mainWindow.Width = 1000;
+                            mainWindow.Height = 700;
+                            mainWindow.MinimumWidth = 1000;
+                            mainWindow.MinimumHeight = 700;
                         }
                         else
                         {

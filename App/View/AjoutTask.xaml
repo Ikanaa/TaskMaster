@@ -30,6 +30,24 @@
                            BackgroundColor="Transparent" />
                 </VerticalStackLayout>
             </Frame>
+            
+            <!-- Champ Etiquette -->
+            <Frame BackgroundColor="#2E2E2E"
+                     CornerRadius="10"
+                     Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Etiquette"
+                         FontSize="16"
+                         FontAttributes="Bold"
+                         TextColor="White" />
+                    <Entry  Placeholder="Entrez les étiquettes (séparées par des virgules)"
+                                 Text="{Binding Etiquettes}"
+                                  FontSize="14"
+                                  TextColor="White"
+                                  PlaceholderColor="Gray"
+                                  BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
 
             <!-- Champ Description -->
             <Frame BackgroundColor="#2E2E2E"
@@ -47,6 +65,21 @@
                             PlaceholderColor="Gray"
                             BackgroundColor="Transparent"
                             AutoSize="TextChanges" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Champ Assignement utilistaure -->
+            <Frame BackgroundColor="#2E2E2E"
+                     CornerRadius="10"
+                     Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Assigner un utilisateur"
+                             FontSize="16"
+                             FontAttributes="Bold"
+                             TextColor="White" />
+                    <Picker ItemsSource="{Binding UtilisateursAssocies}" 
+                            ItemDisplayBinding="{Binding Nom}" 
+                            SelectedItem="{Binding UtilisateurAssigne}" />
                 </VerticalStackLayout>
             </Frame>
 
@@ -85,6 +118,23 @@
                             BackgroundColor="Transparent" />
                 </VerticalStackLayout>
             </Frame>
+            
+           
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Date d'échéance"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                    <DatePicker Date="{Binding DateEcheance}"
+                    FontSize="14"
+                    TextColor="White"
+                    BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
 
             <!-- Champ Catégorie -->
             <Frame BackgroundColor="#2E2E2E"

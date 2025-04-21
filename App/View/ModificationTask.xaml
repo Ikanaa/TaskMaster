@@ -85,6 +85,20 @@
                             BackgroundColor="Transparent" />
                 </VerticalStackLayout>
             </Frame>
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Projet"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker Title="Sélectionner un projet"
+                            ItemsSource="{Binding ListeProjets}"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding ProjetSelectionne}" />
+                </VerticalStackLayout>
+            </Frame>
 
             <!-- Champ Catégorie -->
             <Frame BackgroundColor="#2E2E2E"
@@ -103,6 +117,39 @@
                             BackgroundColor="Transparent" />
                 </VerticalStackLayout>
             </Frame>
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Date d'échéance"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                    <DatePicker Date="{Binding DateEcheance}"
+                    FontSize="14"
+                    TextColor="White"
+                    BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sélection de l'utilisateur assigné -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Assigner un utilisateur"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker ItemsSource="{Binding UtilisateursAssocies}"
+                  
+                            SelectedItem="{Binding UtilisateurAssigne}"
+                            ItemDisplayBinding="{Binding Prenom}"
+                            FontSize="14"
+                            TextColor="White"
+                            BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
 
             <!-- Boutons d'action -->
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
@@ -113,6 +160,7 @@
                         HeightRequest="40"
                         CornerRadius="20"
                         Command="{Binding SaveTaskCommand}" />
+
                 <Button Text="Annuler"
                         BackgroundColor="Red"
                         TextColor="White"
@@ -124,4 +172,3 @@
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

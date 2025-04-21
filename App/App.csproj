@@ -81,6 +81,9 @@
       <MauiXaml Update="View\ConnexionUser.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+      <MauiXaml Update="View\GestionUtilisateurs.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="View\InscriptionUser.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
@@ -88,6 +91,9 @@
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="View\DetailTask.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="View\Projets.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
     </ItemGroup>

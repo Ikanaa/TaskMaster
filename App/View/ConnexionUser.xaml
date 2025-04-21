@@ -8,8 +8,8 @@
            FontSize="24" 
            HorizontalOptions="Center" />
 
-        <Entry x:Name="NameEntry" 
-           Placeholder="Nom complet ou Email" 
+        <Entry x:Name="EmailEntry" 
+           Placeholder="Email" 
            Keyboard="Text" 
            WidthRequest="250"
            HorizontalOptions="Center" />

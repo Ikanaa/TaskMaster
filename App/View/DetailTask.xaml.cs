@@ -1,69 +1,41 @@
+using App.ViewModels;
 using EntityFramework.Models;
 
 namespace App.View;
 
 public partial class DetailTache : ContentPage
 {
-    public Tache Tache { get; set; }
+    public DetailTaskViewModel ViewModel { get; set; }
+
     public DetailTache(Tache tache)
     {
         InitializeComponent();
-        Tache = tache;
-        BindingContext = tache; // Lier la tâche sélectionnée au contexte de la page
+        ViewModel = new DetailTaskViewModel(tache);
+        BindingContext = ViewModel;
     }
 
-    private void OnAddCommentButtonClicked(object sender, EventArgs e)
+
+    private async void OnDeleteCommentButtonClicked(object sender, EventArgs e)
     {
-        string newCommentText = NewCommentEditor.Text;
+        Button button = sender as Button;
+        Commentaire comment = button?.CommandParameter as Commentaire;
 
-        if (string.IsNullOrWhiteSpace(newCommentText))
+        if (comment != null)
         {
-            DisplayAlert("Erreur", "Le commentaire ne peut pas être vide.", "OK");
-            return;
+            await ViewModel.DeleteComment(comment);
         }
-
-        var user = new Utilisateur();
-        user.Nom = "Anonyme";
-        user.Id_uti = 0;
-        user.Date_inscription = DateTime.Now;
-        user.Email = "";
-        user.Mot_de_passe = "";
-        user.Prenom = "";
-
-        // Créer un nouveau commentaire
-        var newComment = new Commentaire();
-
-            newComment.Id_com = new Random().Next(1000, 9999);
-            newComment.Contenu = newCommentText;
-        newComment.Utilisateur = Tache.Auteur ?? user;
-            newComment.Date_creation = DateTime.Now;
-
-        
-
-        // Ajouter le commentaire à la tâche
-        Tache.Commentaires?.Add(newComment);
-
-        // Rafraîchir la CollectionView
-        TaskListView.ItemsSource = null;
-        TaskListView.ItemsSource = Tache.Commentaires;
-
-        // Réinitialiser l'éditeur
-        NewCommentEditor.Text = string.Empty;
+    }
+    private async void OnBackButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 
-    private void OnDeleteCommentButtonClicked(object sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        var button = sender as Button;
-        var commentToDelete = button?.CommandParameter as Commentaire;
+        base.OnAppearing();
 
-        if (commentToDelete != null)
-        {
-            // Supprimer le commentaire
-            Tache.Commentaires?.Remove(commentToDelete);
-
-            // Rafraîchir la CollectionView
-            TaskListView.ItemsSource = null;
-            TaskListView.ItemsSource = Tache.Commentaires;
-        }
+        // Rafraîchir les commentaires à chaque fois que la page apparaît
+        await ViewModel.RefreshComments();
+        await ViewModel.RefreshSousTaches();
     }
 }
