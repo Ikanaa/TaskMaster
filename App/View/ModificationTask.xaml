@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.View.ModificationTask"
+             Title="Modifier une Tâche"
+             BackgroundColor="#1E1E1E">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Titre de la page -->
+            <Label Text="Modifier la Tâche"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <!-- Champ Titre -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Titre"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Entry Placeholder="Entrez le titre de la tâche"
+                           Text="{Binding Titre}"
+                           FontSize="14"
+                           TextColor="White"
+                           PlaceholderColor="Gray"
+                           BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Champ Description -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Description"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Editor Placeholder="Entrez la description de la tâche"
+                            Text="{Binding Description}"
+                            FontSize="14"
+                            TextColor="White"
+                            PlaceholderColor="Gray"
+                            BackgroundColor="Transparent"
+                            AutoSize="TextChanges" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Champ Statut -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Statut"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker Title="Sélectionnez un statut"
+                            ItemsSource="{Binding StatutOptions}"
+                            SelectedItem="{Binding Statut}"
+                            FontSize="14"
+                            TextColor="White"
+                            BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Champ Priorité -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Priorité"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker Title="Sélectionnez une priorité"
+                            ItemsSource="{Binding PrioriteOptions}"
+                            SelectedItem="{Binding Priorite}"
+                            FontSize="14"
+                            TextColor="White"
+                            BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Projet"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker Title="Sélectionner un projet"
+                            ItemsSource="{Binding ListeProjets}"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding ProjetSelectionne}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Champ Catégorie -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Catégorie"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker Title="Sélectionnez une catégorie"
+                            ItemsSource="{Binding CategorieOptions}"
+                            SelectedItem="{Binding Categorie}"
+                            FontSize="14"
+                            TextColor="White"
+                            BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Date d'échéance"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                    <DatePicker Date="{Binding DateEcheance}"
+                    FontSize="14"
+                    TextColor="White"
+                    BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sélection de l'utilisateur assigné -->
+            <Frame BackgroundColor="#2E2E2E"
+                   CornerRadius="10"
+                   Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Assigner un utilisateur"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Picker ItemsSource="{Binding UtilisateursAssocies}"
+                  
+                            SelectedItem="{Binding UtilisateurAssigne}"
+                            ItemDisplayBinding="{Binding Prenom}"
+                            FontSize="14"
+                            TextColor="White"
+                            BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Boutons d'action -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Enregistrer"
+                        BackgroundColor="#007AFF"
+                        TextColor="White"
+                        WidthRequest="120"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        Command="{Binding SaveTaskCommand}" />
+
+                <Button Text="Annuler"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        WidthRequest="120"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        Command="{Binding CancelCommand}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
