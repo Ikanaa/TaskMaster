@@ -11,12 +11,26 @@
             public DbSet<Tache> Taches { get; set; } = null!;
             public DbSet<Commentaire> Commentaires { get; set; } = null!;
             public DbSet<UtilisateurProjet> UtilisateurProjets { get; set; } = null!;
-            
-            public TaskmasterContext(DbContextOptions<TaskmasterContext> options) : base(options)
+
+         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         {
+            try
             {
+                optionsBuilder.UseMySql(
+                    "server=localhost;database=taskmaster;user=root;password=rootpassword;",
+                    new MySqlServerVersion(new Version(10, 5, 0)) // Remplacez par la version de votre MariaDB
+                );
             }
-            
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            catch (Exception ex)
+            {
+                // Log de l'erreur pour le débogage
+                System.Diagnostics.Debug.WriteLine($"Erreur lors de la configuration de la base de données : {ex.Message}");
+                // Vous pouvez également lever une exception personnalisée si nécessaire
+                throw new InvalidOperationException("Impossible de configurer la base de données.", ex);
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 // Table names
                 modelBuilder.Entity<Utilisateur>().ToTable("UTILISATEUR");

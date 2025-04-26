@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             x:Class="App.View.Accueil"
+             Title="Gestionnaire de Tâches"
+             BackgroundColor="#161616">
+
+    <ContentPage.Resources>
+        <Style x:Key="TaskCardStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#2A2A2A" />
+            <Setter Property="BorderColor" Value="#3A3A3A" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="Margin" Value="8,6" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+        
+        <Style x:Key="StatusBadgeStyle" TargetType="Frame">
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HasShadow" Value="False" />
+        </Style>
+        
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="CornerRadius" Value="22" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="HeightRequest" Value="44" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:TaskViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <!-- Header -->
+        <Frame Grid.Row="0" BackgroundColor="#252525" Padding="15,20" HasShadow="True" CornerRadius="0">
+            <Grid ColumnDefinitions="*, Auto">
+                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                    <Label Text="Gestionnaire de tâches" 
+                           TextColor="#999999" 
+                           FontSize="14" 
+                           Margin="5,0,0,0"/>
+                    <Label Text="Liste des tâches" 
+                           FontSize="28" 
+                           FontAttributes="Bold" 
+                           TextColor="White" 
+                           Margin="5,0,0,0"/>
+                </VerticalStackLayout>
+                
+                <HorizontalStackLayout Grid.Column="1" Spacing="12">
+                  
+                    
+                    <Button Text="Déconnexion"
+                            Clicked="OnLogoutButtonClicked"
+                            BackgroundColor="#3E3E3E"
+                            TextColor="#FF5252"
+                            FontAttributes="Bold"
+                            CornerRadius="20"
+                            Padding="15,0"
+                            HeightRequest="40"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </Frame>
+
+        <!-- Liste des tâches -->
+        <RefreshView Grid.Row="1" Command="{Binding LoadTasksCommand}">
+            <CollectionView x:Name="TaskListView"
+                            ItemsSource="{Binding Tasks}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnTaskSelected"
+                            Margin="10,15">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+                            <Image Source="task_icon.png" WidthRequest="80" HeightRequest="80" Opacity="0.6" />
+                            <Label Text="Aucune tâche à afficher" 
+                                   TextColor="#999999" 
+                                   FontSize="20"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Ajoutez une nouvelle tâche en cliquant sur le bouton ci-dessous" 
+                                   TextColor="#777777" 
+                                   FontSize="16"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   MaxLines="2" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Style="{StaticResource TaskCardStyle}">
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto" 
+                                  RowSpacing="12">
+                                <!-- En-tête avec titre et icône -->
+                                <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto">
+                                    <Frame Grid.Column="0" 
+                                           BackgroundColor="#353535" 
+                                           CornerRadius="12" 
+                                           Padding="8" 
+                                           HasShadow="False"
+                                           WidthRequest="38" 
+                                           HeightRequest="38">
+                                        <Image Source="task.png" 
+                                               WidthRequest="22" 
+                                               HeightRequest="22" 
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+                                    
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding Titre}"
+                                           FontSize="19"
+                                           FontAttributes="Bold"
+                                           TextColor="White"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0" />
+                                </Grid>
+
+                                <!-- Description -->
+                                <Label Grid.Row="1" 
+                                       Text="{Binding Description}"
+                                       FontSize="15"
+                                       TextColor="#BBBBBB"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+
+                                <!-- Badges de statut et priorité -->
+                                <FlexLayout Grid.Row="2" 
+                                            Wrap="Wrap"
+                                            JustifyContent="Start"
+                                            AlignItems="Center"
+                                            Margin="0,5"
+                                            BindableLayout.ItemsSource="{Binding}"
+                                            >
+                                    <Frame BackgroundColor="#3F704D" 
+                                           Style="{StaticResource StatusBadgeStyle}">
+                                        <Label Text="{Binding Statut}"
+                                               FontSize="13"
+                                               TextColor="#A5FFB8"
+                                               FontAttributes="Bold" />
+                                    </Frame>
+                                    
+                                    <Frame BackgroundColor="#6B4E28" 
+                                           Style="{StaticResource StatusBadgeStyle}">
+                                        <Label Text="{Binding Priorite}"
+                                               FontSize="13"
+                                               TextColor="#FFCC70"
+                                               FontAttributes="Bold" />
+                                    </Frame>
+
+                                    <Frame BackgroundColor="#444444" 
+                                           Style="{StaticResource StatusBadgeStyle}">
+                                        <Label Text="{Binding Date_echeance, StringFormat='{0:dd MMM yyyy}'}"
+                                               FontSize="13"
+                                               TextColor="#CCCCCC" />
+                                    </Frame>
+                                </FlexLayout>
+
+                                <!-- Boutons d'action -->
+                                <Grid Grid.Row="3" 
+                                      ColumnDefinitions="*, Auto, Auto" 
+                                      ColumnSpacing="10">
+                                    
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Date_creation, StringFormat='Créé le {0:dd/MM/yyyy}'}"
+                                           FontSize="12"
+                                           TextColor="#777777"
+                                           VerticalOptions="Center" />
+                                          
+                                    <Button Grid.Column="1"
+                                            Text="Modifier"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TaskViewModel}}, Path=ModifyTaskCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#0A84FF"
+                                            Style="{StaticResource ActionButtonStyle}" />
+                                    
+                                    <Button Grid.Column="2"
+                                            Text="Supprimer"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TaskViewModel}}, Path=DeleteTaskCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#FF453A"
+                                            Style="{StaticResource ActionButtonStyle}" />
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Barre d'action flottante -->
+        <Frame Grid.Row="2" 
+               BackgroundColor="#252525" 
+               Padding="20,15" 
+               HasShadow="True" 
+               CornerRadius="0">
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                <Button Grid.Column="0" 
+                        Text="+ Nouvelle tâche"
+                        Clicked="OnAddTaskButtonClicked"
+                        BackgroundColor="#0A84FF"
+                        TextColor="White"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="25"/>
+                
+                <Button Grid.Column="1" 
+                        Text="Gérer les projets"
+                        Clicked="OnProjectsButtonClicked"
+                        BackgroundColor="#3E3E3E"
+                        TextColor="White"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="25"/>
+            </Grid>
+        </Frame>
+        
+        <!-- Bouton d'ajout flottant (alternative) -->
+        <Button Grid.Row="1"
+                Text="+"
+                FontSize="26"
+                BackgroundColor="#0A84FF"
+                TextColor="White"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="30"
+                Clicked="OnAddTaskButtonClicked"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,25,25" />
+    </Grid>
+</ContentPage>

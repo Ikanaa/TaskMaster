@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.View.GestionUtilisateurs"
+             BackgroundColor="#121212"
+             Title="Gestion des utilisateurs">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16" RowSpacing="16">
+        <!-- Titre -->
+        <StackLayout Grid.Row="0" Orientation="Horizontal">
+            <Button Text="Retour"
+                    Clicked="OnRetourButtonClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#0A84FF"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start" />
+
+            <Label Text="Gestion des utilisateurs" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+
+        <!-- Liste des utilisateurs associés -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding UtilisateursAssocies}"
+                        EmptyView="Aucun utilisateur associé à ce projet">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" ColumnDefinitions="*, Auto">
+                        <Frame Grid.Column="0"
+                               BackgroundColor="#2A2A2A" 
+                               BorderColor="#3A3A3A" 
+                               CornerRadius="16" 
+                               Padding="16" 
+                               HasShadow="True">
+                            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*, Auto">
+                                <!-- Informations utilisateur -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                                    <Label Text="{Binding Nom}" 
+                                           FontSize="18" 
+                                           TextColor="White" 
+                                           FontAttributes="Bold" />
+
+                                    <Label Text="{Binding Prenom}" 
+                                           FontSize="16" 
+                                           TextColor="#BBBBBB" />
+
+                                    <Label Text="{Binding Email}" 
+                                           FontSize="14" 
+                                           TextColor="#999999" />
+                                </VerticalStackLayout>
+
+                                <!-- Bouton Retirer -->
+                                <Button Grid.Row="0" Grid.Column="1"
+                                        Text="Retirer"
+                                        BackgroundColor="#FF453A"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="20"
+                                        Padding="12,8"
+                                        VerticalOptions="Center"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RetirerUtilisateurCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Style de l'EmptyView -->
+            <CollectionView.EmptyViewTemplate>
+                <DataTemplate>
+                    <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                        <VerticalStackLayout Spacing="16" Padding="20">
+                            <Label Text="Aucun utilisateur dans ce projet" 
+                                   TextColor="#999999"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Label Text="Ajoutez des utilisateurs pour collaborer" 
+                                   TextColor="#777777"
+                                   FontSize="14"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.EmptyViewTemplate>
+        </CollectionView>
+
+        <!-- Bouton pour ajouter des utilisateurs -->
+        <Button Grid.Row="2"
+                Text="+ Ajouter un utilisateur"
+                BackgroundColor="#0A84FF"
+                TextColor="White"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                CornerRadius="20"
+                Command="{Binding AjouterUtilisateurCommand}"
+                Margin="0,10,0,0" />
+    </Grid>
+</ContentPage>

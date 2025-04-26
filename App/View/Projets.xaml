@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             x:Class="App.View.Projets"
+             BackgroundColor="#121212"
+             Title="Projets">
+
+    <ContentPage.BindingContext>
+        <vm:ProjetsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Déconnexion" 
+                 IconImageSource="logout_icon.png"
+                 Clicked="OnLogoutButtonClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <Style x:Key="ProjectCardStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#2A2A2A" />
+            <Setter Property="BorderColor" Value="#3A3A3A" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="Margin" Value="8,4" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="0.4" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="MinimumHeightRequest" Value="36" />
+        </Style>
+
+        <Style x:Key="AddButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="BackgroundColor" Value="#0A84FF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16" RowSpacing="16">
+        <!-- Titre -->
+        <Label Grid.Row="0" 
+               Text="Mes Projets" 
+               FontSize="32" 
+               FontAttributes="Bold" 
+               TextColor="White" 
+               Margin="4,8" />
+
+        <!-- Liste des projets -->
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Projets}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnProjectSelected"
+                            EmptyView="Aucun projet disponible. Créez votre premier projet !">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,6">
+                            <Frame Style="{StaticResource ProjectCardStyle}">
+                                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                                    <!-- Informations du projet -->
+                                    <VerticalStackLayout Grid.Row="0" Spacing="4">
+                                        <Label Text="{Binding Nom}" 
+                                               FontSize="20" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" />
+
+                                        <Label Text="{Binding Description}" 
+                                               FontSize="14" 
+                                               TextColor="#BBBBBB"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="2" />
+                                    </VerticalStackLayout>
+
+                                    <!-- Date de création -->
+                                    <Label Grid.Row="1"
+                                           Text="{Binding Date_creation, StringFormat='Créé le {0:dd/MM/yyyy}'}"
+                                           FontSize="12"
+                                           TextColor="#999999" />
+
+                                    <!-- Boutons d'action -->
+                                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                      
+
+                                        <!-- Actions -->
+                                        <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                                            <Button Text="Utilisateurs"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    BackgroundColor="#0A84FF"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjetsViewModel}}, Path=GererUtilisateursCommand}"
+                                                    CommandParameter="{Binding .}" />
+
+                                            <Button Text="Supprimer"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    BackgroundColor="#FF453A"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjetsViewModel}}, Path=DeleteProjectCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Effet tactile pour sélection -->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=SelectionChangedCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <!-- Style de l'EmptyView -->
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                            <VerticalStackLayout Spacing="16" Padding="20">
+                                <Image Source="noproject.png" 
+                                       WidthRequest="120" 
+                                       HeightRequest="120" 
+                                       IsVisible="False" />
+
+                                <Label Text="Aucun projet disponible" 
+                                       TextColor="#999999"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Label Text="Créez un premier projet pour commencer" 
+                                       TextColor="#777777"
+                                       FontSize="14"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Button Text="Créer un projet" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjetsViewModel}}, Path=AddProjectCommand}"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        WidthRequest="200"
+                                        HorizontalOptions="Center"
+                                        Margin="0,20,0,0" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Bouton d'ajout flottant -->
+        <Button Grid.Row="2"
+                Text="+ Nouveau Projet"
+                Style="{StaticResource AddButtonStyle}"
+                Command="{Binding AddProjectCommand}"
+                Margin="16,4,16,16"
+                HorizontalOptions="Fill" />
+    </Grid>
+</ContentPage>
