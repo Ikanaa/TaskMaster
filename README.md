@@ -9,6 +9,8 @@
 docker-compose up
 ```
 
+<div style="page-break-after: always;"></div>
+
 # Guide d'utilisation
 
 #### Connection / Inscription
@@ -18,10 +20,14 @@ Pour commencer, lorsque vous allez ouvrir pour la première fois l'application, 
 Sinon, si vous avez déjà un compte, vous pouvez cliquer sur *Se connecter* pour accéder à la page de connexion.
 ![Connection screenshot](screenshot/connexion.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Page principale
 
 Vous aurez alors devant vous le gestionnaire de tâche
 ![tache screenshot](screenshot/tache.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Projet
 
@@ -34,6 +40,8 @@ Vous pouvez gérer les utilisateurs du projet en cliquant sur *Utilisateur*
 ![utilisateur projet screenshot](screenshot/Utilisateur1.png)
 Vous pouvez ajouter un utilisateur au projet avec le bouton *Ajouter un utilisateur*
 ![utilisateur projet 2 screenshot](screenshot/utilisateur2.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Tâche
 
